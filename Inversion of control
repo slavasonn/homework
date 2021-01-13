@@ -1,0 +1,53 @@
+#include <iostream>
+#include <stdarg.h>
+
+using namespace std;
+
+enum{TEN = 10};
+
+void lessMySort(int& x, int& y) {
+	int temp = 0;
+	if (x > y) {
+		temp = x;
+		x = y;
+		y = temp;
+	}
+}
+
+void greaterMySort(int& x, int& y) {
+	int temp = 0;
+	if (x < y) {
+		temp = x;
+		x = y;
+		y = temp;
+	}
+}
+
+void sort(int* arr, int n, void (*func)(int&, int&))
+{
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			func(arr[i], arr[j]);
+		}
+	}
+}
+
+int main() {
+	void(*lessPtr) (int&, int&) = &lessMySort;
+	void(*greaterPtr) (int&, int&) = &greaterMySort;
+
+	int arr[TEN] = { 125, 12, 1, 246, 23, 23, 52, 78, 0, 87 };
+
+	sort(arr, TEN, lessPtr);
+
+	for (int i = 0; i < TEN; i++)
+		cout << arr[i] << endl;
+	cout << "_________________________" << endl;
+
+	sort(arr, TEN, greaterPtr);
+
+	for (int i = 0; i < TEN; i++) 
+		cout << arr[i] << endl;
+	
+
+}
